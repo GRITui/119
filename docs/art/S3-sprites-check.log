@@ -1,0 +1,139 @@
+==============================================================================
+S3 stage sprite acceptance check — 119-S3-A1 (t_83e1e414)
+repo      : /Volumes/Ugreen_WD 1.0 TB/grit/workspace/119
+spec      : docs/design/S1-viewport-spec.md §2.1 (canvas 1024x1536)
+expected  : 4 characters x 7 moods = 28 PNGs
+==============================================================================
+
+[1] FILES / FORMAT / GEOMETRY
+------------------------------------------------------------------------------
+  ton   neutral     PNG RGBA 1024x1536 alpha[0,255] bbox=(368, 72, 656, 1515) size=66KB OK
+  ton   happy       PNG RGBA 1024x1536 alpha[0,255] bbox=(368, 72, 656, 1515) size=67KB OK
+  ton   stressed    PNG RGBA 1024x1536 alpha[0,255] bbox=(368, 72, 656, 1515) size=69KB OK
+  ton   shocked     PNG RGBA 1024x1536 alpha[0,255] bbox=(368, 72, 656, 1515) size=69KB OK
+  ton   determined  PNG RGBA 1024x1536 alpha[0,255] bbox=(368, 72, 656, 1515) size=66KB OK
+  ton   exhausted   PNG RGBA 1024x1536 alpha[0,255] bbox=(368, 72, 656, 1515) size=67KB OK
+  ton   smug        PNG RGBA 1024x1536 alpha[0,255] bbox=(368, 72, 656, 1515) size=68KB OK
+  may   neutral     PNG RGBA 1024x1536 alpha[0,255] bbox=(378, 90, 654, 1515) size=66KB OK
+  may   happy       PNG RGBA 1024x1536 alpha[0,255] bbox=(378, 90, 654, 1515) size=66KB OK
+  may   stressed    PNG RGBA 1024x1536 alpha[0,255] bbox=(378, 90, 654, 1515) size=70KB OK
+  may   shocked     PNG RGBA 1024x1536 alpha[0,255] bbox=(378, 90, 654, 1515) size=68KB OK
+  may   determined  PNG RGBA 1024x1536 alpha[0,255] bbox=(378, 90, 654, 1515) size=65KB OK
+  may   exhausted   PNG RGBA 1024x1536 alpha[0,255] bbox=(378, 90, 654, 1515) size=66KB OK
+  may   smug        PNG RGBA 1024x1536 alpha[0,255] bbox=(378, 90, 654, 1515) size=67KB OK
+  chai  neutral     PNG RGBA 1024x1536 alpha[0,255] bbox=(350, 92, 674, 1515) size=62KB OK
+  chai  happy       PNG RGBA 1024x1536 alpha[0,255] bbox=(350, 92, 674, 1515) size=62KB OK
+  chai  stressed    PNG RGBA 1024x1536 alpha[0,255] bbox=(350, 92, 674, 1515) size=65KB OK
+  chai  shocked     PNG RGBA 1024x1536 alpha[0,255] bbox=(350, 92, 674, 1515) size=66KB OK
+  chai  determined  PNG RGBA 1024x1536 alpha[0,255] bbox=(350, 92, 674, 1515) size=61KB OK
+  chai  exhausted   PNG RGBA 1024x1536 alpha[0,255] bbox=(350, 92, 674, 1515) size=63KB OK
+  chai  smug        PNG RGBA 1024x1536 alpha[0,255] bbox=(350, 92, 674, 1515) size=63KB OK
+  lin   neutral     PNG RGBA 1024x1536 alpha[0,255] bbox=(366, 86, 666, 1515) size=68KB OK
+  lin   happy       PNG RGBA 1024x1536 alpha[0,255] bbox=(366, 86, 666, 1515) size=69KB OK
+  lin   stressed    PNG RGBA 1024x1536 alpha[0,255] bbox=(366, 86, 666, 1515) size=72KB OK
+  lin   shocked     PNG RGBA 1024x1536 alpha[0,255] bbox=(366, 86, 666, 1515) size=71KB OK
+  lin   determined  PNG RGBA 1024x1536 alpha[0,255] bbox=(366, 86, 666, 1515) size=68KB OK
+  lin   exhausted   PNG RGBA 1024x1536 alpha[0,255] bbox=(366, 86, 666, 1515) size=68KB OK
+  lin   smug        PNG RGBA 1024x1536 alpha[0,255] bbox=(366, 86, 666, 1515) size=70KB OK
+------------------------------------------------------------------------------
+  files found            : 28 / 28
+  distinct WxH values    : [(1024, 1536)]
+  IDENTICAL SIZE         : PASS (1024x1536 = spec 2.1)
+  total payload          : 1.84 MB (spec target <= ~11 MB)
+
+  anchor / extent check (bbox y0 ~= head crown, bbox y1 ~= feet):
+    crown  y: min=72 max=92  (spec ~96, allow <=140)
+    feet   y: min=1515 max=1515  (spec 1536 = bottom edge, allow >=1490)
+    bottom-anchored       : PASS
+    uniform crop          : PASS
+
+[2] DELIVERABLES
+------------------------------------------------------------------------------
+  PASS  docs/art/S3-sprites-contact.png  (contact sheet)  170KB
+  PASS  docs/art/S3-sprites-manifest.md  (manifest)  6KB
+
+[3] CHARACTER IDENTITY ACROSS MOODS
+------------------------------------------------------------------------------
+  Same hair/clothes/palette in every mood of a character, and different
+  between characters. Measured as the signature colours (skin / hair /
+  cloth) plus head-silhouette coverage; identical geometry per mood = the
+  face moved and the body did not (spec 2.1).
+
+  --- ton ---
+    neutral     head_cov=0.435 figure_px= 249081 hair_buckets=4 cloth_buckets=7 ink_cells= 42 sclera_cells=  0
+    happy       head_cov=0.435 figure_px= 249160 hair_buckets=4 cloth_buckets=7 ink_cells= 44 sclera_cells=  4
+    stressed    head_cov=0.435 figure_px= 248194 hair_buckets=4 cloth_buckets=8 ink_cells= 35 sclera_cells=  2
+    shocked     head_cov=0.435 figure_px= 249084 hair_buckets=4 cloth_buckets=7 ink_cells= 43 sclera_cells= 12
+    determined  head_cov=0.435 figure_px= 249081 hair_buckets=4 cloth_buckets=7 ink_cells= 35 sclera_cells=  0
+    exhausted   head_cov=0.435 figure_px= 247410 hair_buckets=4 cloth_buckets=8 ink_cells= 32 sclera_cells=  0
+    smug        head_cov=0.435 figure_px= 249081 hair_buckets=4 cloth_buckets=7 ink_cells= 36 sclera_cells=  0
+    head-cov spread      : 0.001  PASS
+    figure-mass spread   : 0.70%  PASS
+    hair/skin palette overlap : min Jaccard 1.00  PASS
+    cloth palette overlap     : min Jaccard 0.88  PASS
+    duplicate face geometries : 0  PASS
+
+  --- may ---
+    neutral     head_cov=0.544 figure_px= 261367 hair_buckets=3 cloth_buckets=6 ink_cells=183 sclera_cells=  0
+    happy       head_cov=0.544 figure_px= 261367 hair_buckets=3 cloth_buckets=6 ink_cells=183 sclera_cells=  4
+    stressed    head_cov=0.544 figure_px= 261566 hair_buckets=3 cloth_buckets=6 ink_cells=174 sclera_cells=  2
+    shocked     head_cov=0.544 figure_px= 261370 hair_buckets=3 cloth_buckets=6 ink_cells=185 sclera_cells= 12
+    determined  head_cov=0.544 figure_px= 261367 hair_buckets=3 cloth_buckets=6 ink_cells=176 sclera_cells=  0
+    exhausted   head_cov=0.544 figure_px= 261619 hair_buckets=3 cloth_buckets=6 ink_cells=173 sclera_cells=  0
+    smug        head_cov=0.544 figure_px= 261367 hair_buckets=3 cloth_buckets=6 ink_cells=175 sclera_cells=  0
+    head-cov spread      : 0.000  PASS
+    figure-mass spread   : 0.10%  PASS
+    hair/skin palette overlap : min Jaccard 1.00  PASS
+    cloth palette overlap     : min Jaccard 1.00  PASS
+    duplicate face geometries : 0  PASS
+
+  --- chai ---
+    neutral     head_cov=0.430 figure_px= 267129 hair_buckets=3 cloth_buckets=5 ink_cells= 19 sclera_cells=  0
+    happy       head_cov=0.431 figure_px= 267208 hair_buckets=3 cloth_buckets=5 ink_cells= 21 sclera_cells=  4
+    stressed    head_cov=0.430 figure_px= 266171 hair_buckets=3 cloth_buckets=5 ink_cells= 11 sclera_cells=  2
+    shocked     head_cov=0.430 figure_px= 267132 hair_buckets=3 cloth_buckets=5 ink_cells= 23 sclera_cells= 12
+    determined  head_cov=0.430 figure_px= 267129 hair_buckets=3 cloth_buckets=5 ink_cells= 12 sclera_cells=  0
+    exhausted   head_cov=0.431 figure_px= 265308 hair_buckets=3 cloth_buckets=5 ink_cells= 10 sclera_cells=  0
+    smug        head_cov=0.430 figure_px= 267129 hair_buckets=3 cloth_buckets=5 ink_cells= 12 sclera_cells=  0
+    head-cov spread      : 0.001  PASS
+    figure-mass spread   : 0.71%  PASS
+    hair/skin palette overlap : min Jaccard 1.00  PASS
+    cloth palette overlap     : min Jaccard 1.00  PASS
+    duplicate face geometries : 0  PASS
+
+  --- lin ---
+    neutral     head_cov=0.583 figure_px= 275875 hair_buckets=3 cloth_buckets=5 ink_cells=212 sclera_cells=  0
+    happy       head_cov=0.583 figure_px= 275875 hair_buckets=3 cloth_buckets=5 ink_cells=209 sclera_cells=  4
+    stressed    head_cov=0.583 figure_px= 276229 hair_buckets=3 cloth_buckets=5 ink_cells=194 sclera_cells=  2
+    shocked     head_cov=0.583 figure_px= 275878 hair_buckets=3 cloth_buckets=5 ink_cells=205 sclera_cells= 12
+    determined  head_cov=0.583 figure_px= 275875 hair_buckets=3 cloth_buckets=5 ink_cells=200 sclera_cells=  0
+    exhausted   head_cov=0.583 figure_px= 276538 hair_buckets=3 cloth_buckets=5 ink_cells=201 sclera_cells=  0
+    smug        head_cov=0.583 figure_px= 275875 hair_buckets=3 cloth_buckets=5 ink_cells=199 sclera_cells=  0
+    head-cov spread      : 0.000  PASS
+    figure-mass spread   : 0.24%  PASS
+    hair/skin palette overlap : min Jaccard 1.00  PASS
+    cloth palette overlap     : min Jaccard 1.00  PASS
+    duplicate face geometries : 0  PASS
+
+  inter-character separation (mean figure_px, must differ):
+    ton   mean figure_px =    248727
+    may   mean figure_px =    261432
+    chai  mean figure_px =    266744
+    lin   mean figure_px =    276021
+    PASS all four silhouettes distinct
+
+  cross-character expression consistency (same mood = same face geometry):
+    neutral     4 characters, 4 distinct face geometries  INFO (builds differ, so faces need not be byte-equal)
+    happy       4 characters, 4 distinct face geometries  INFO (builds differ, so faces need not be byte-equal)
+    stressed    4 characters, 4 distinct face geometries  INFO (builds differ, so faces need not be byte-equal)
+    shocked     4 characters, 4 distinct face geometries  INFO (builds differ, so faces need not be byte-equal)
+    determined  4 characters, 4 distinct face geometries  INFO (builds differ, so faces need not be byte-equal)
+    exhausted   4 characters, 4 distinct face geometries  INFO (builds differ, so faces need not be byte-equal)
+    smug        4 characters, 4 distinct face geometries  INFO (builds differ, so faces need not be byte-equal)
+    (expression is authored per character, so a byte-difference here is
+     expected and not a defect; the per-character duplicate check above is
+     the one that gates mood distinctness.)
+
+==============================================================================
+RESULT: PASS — all checks green
+==============================================================================
