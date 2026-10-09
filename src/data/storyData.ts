@@ -1,4 +1,4 @@
-import { Character, EndingInfo, StoryNode } from '../types/game';
+import { Character, EndingInfo, StoryNode, WeatherEffect } from '../types/game';
 
 // Image assets mapping
 export const STORY_IMAGES: Record<string, string> = {
@@ -6,6 +6,49 @@ export const STORY_IMAGES: Record<string, string> = {
   office_night: '/src/assets/images/bangkok_office_night_1791510503292.jpg',
   street_food: '/src/assets/images/bangkok_street_food_1791510514490.jpg',
   condo_balcony: '/src/assets/images/bangkok_condo_balcony_1791510526238.jpg',
+};
+
+export const BANGKOK_WEATHER_EFFECTS: Record<string, WeatherEffect> = {
+  monsoon_rush_hour: {
+    type: 'monsoon',
+    label: 'Monsoon Downpour',
+    thaiLabel: 'ฝนกระหน่ำ มรสุม 28°C',
+    tempCelsius: 28,
+    humidityPercent: 96,
+    energyImpact: -3,
+    impactReason: 'Damp clothes and humid commute crowd drain stamina',
+    thaiImpactReason: 'ละอองฝนสาดเปียกชื้น เบียดเสียดบนชานชาลา ลดพลังงาน',
+  },
+  scorching_heat_haze: {
+    type: 'heat_haze',
+    label: 'Sukhumvit Heat Haze',
+    thaiLabel: 'ไอร้อนระอุ 36°C',
+    tempCelsius: 36,
+    humidityPercent: 78,
+    energyImpact: -2,
+    impactReason: 'Blistering asphalt heat causes dehydration and fatigue',
+    thaiImpactReason: 'ไอความร้อนจากพื้นถนนและแดดจัด อ่อนเพลียสะสม',
+  },
+  corporate_ac_chill: {
+    type: 'ac_chill',
+    label: 'Glass Tower AC Chill',
+    thaiLabel: 'แอร์ออฟฟิศ 20°C แช่แข็ง',
+    tempCelsius: 20,
+    humidityPercent: 42,
+    energyImpact: -2,
+    impactReason: 'Freezing office AC and 12-hour screen eye strain',
+    thaiImpactReason: 'แอร์เย็นจัดตลอดวัน และแสงจอคอมพิวเตอร์ล้าสายตา',
+  },
+  golden_hour_balcony: {
+    type: 'golden_dusk',
+    label: 'Balcony Sunset Twilight',
+    thaiLabel: 'สายลมเย็นยามสนธยา 29°C',
+    tempCelsius: 29,
+    humidityPercent: 65,
+    energyImpact: 4,
+    impactReason: 'Gentle dusk breeze and skyline view restore mental sanity',
+    thaiImpactReason: 'สายลมยามเย็นและวิวขอบฟ้าสีทอง ช่วยฟื้นฟูพลังใจ',
+  },
 };
 
 export const CHARACTERS: Record<string, Character> = {
@@ -140,6 +183,7 @@ export const STORY_NODES: Record<string, StoryNode> = {
         location: 'BTS Siam Interchange Platform',
         bgm: 'rain_ambient',
         weather: 'monsoon',
+        weatherEffect: BANGKOK_WEATHER_EFFECTS.monsoon_rush_hour,
       },
       {
         id: 'p1_2',
@@ -249,6 +293,8 @@ export const STORY_NODES: Record<string, StoryNode> = {
         timeOfDay: '14:30 PM · Client Suite',
         location: 'Vertex Labs · Sukhumvit 21, 24th Floor',
         bgm: 'office_hum',
+        weather: 'ac_chill',
+        weatherEffect: BANGKOK_WEATHER_EFFECTS.corporate_ac_chill,
       },
       {
         id: 'a1_b2',
@@ -295,6 +341,8 @@ export const STORY_NODES: Record<string, StoryNode> = {
         timeOfDay: '14:30 PM · Client Suite',
         location: 'Vertex Labs · Sukhumvit 21, 24th Floor',
         bgm: 'office_hum',
+        weather: 'monsoon',
+        weatherEffect: BANGKOK_WEATHER_EFFECTS.monsoon_rush_hour,
       },
       {
         id: 'a1_w2',
@@ -341,6 +389,8 @@ export const STORY_NODES: Record<string, StoryNode> = {
         timeOfDay: '14:30 PM · Client Suite',
         location: 'Vertex Labs · Sukhumvit 21, 24th Floor',
         bgm: 'office_hum',
+        weather: 'heat_haze',
+        weatherEffect: BANGKOK_WEATHER_EFFECTS.scorching_heat_haze,
       },
       {
         id: 'a1_c2',
@@ -388,6 +438,8 @@ export const STORY_NODES: Record<string, StoryNode> = {
         timeOfDay: '18:45 PM · Overtime',
         location: 'Vertex Labs · Meeting Room 4',
         bgm: 'office_hum',
+        weather: 'ac_chill',
+        weatherEffect: BANGKOK_WEATHER_EFFECTS.corporate_ac_chill,
       },
       {
         id: 'cr_2',
@@ -775,6 +827,8 @@ export const STORY_NODES: Record<string, StoryNode> = {
         timeOfDay: '22:15 PM · Street Alley',
         location: 'Jae Da Noodle Stall · Sukhumvit Soi 22',
         bgm: 'chill_lofi',
+        weather: 'heat_haze',
+        weatherEffect: BANGKOK_WEATHER_EFFECTS.scorching_heat_haze,
       },
       {
         id: 'nn_2',
@@ -919,6 +973,8 @@ export const STORY_NODES: Record<string, StoryNode> = {
         timeOfDay: '00:30 AM · Late Condo',
         location: 'On Nut Condo Balcony',
         bgm: 'chill_lofi',
+        weather: 'golden_dusk',
+        weatherEffect: BANGKOK_WEATHER_EFFECTS.golden_hour_balcony,
         choices: [
           {
             id: 'c_goto_balcony_prep',
@@ -1076,6 +1132,8 @@ export const STORY_NODES: Record<string, StoryNode> = {
         timeOfDay: 'Final Review Day',
         location: 'Vertex Labs · 28th Floor Review Suite',
         bgm: 'dramatic_tension',
+        weather: 'golden_dusk',
+        weatherEffect: BANGKOK_WEATHER_EFFECTS.golden_hour_balcony,
       },
       {
         id: 'jd_2',

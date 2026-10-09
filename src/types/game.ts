@@ -28,6 +28,19 @@ export interface Choice {
   soundCue?: 'decision' | 'tension' | 'success';
 }
 
+export type WeatherType = 'monsoon' | 'heat_haze' | 'ac_chill' | 'golden_dusk' | 'clear';
+
+export interface WeatherEffect {
+  type: WeatherType;
+  label: string;
+  thaiLabel: string;
+  tempCelsius: number;
+  humidityPercent: number;
+  energyImpact: number; // energy modification (+ or -)
+  impactReason: string;
+  thaiImpactReason: string;
+}
+
 export interface DialogueLine {
   id: string;
   speakerId: 'ton' | 'may' | 'chai' | 'lin' | 'narrator' | 'mae' | 'barista' | 'system';
@@ -40,7 +53,8 @@ export interface DialogueLine {
   timeOfDay: '08:15 AM · Rush Hour' | '14:30 PM · Client Suite' | '18:45 PM · Overtime' | '22:15 PM · Street Alley' | '00:30 AM · Late Condo' | 'Final Review Day';
   location: string;
   bgm?: 'chill_lofi' | 'rain_ambient' | 'office_hum' | 'dramatic_tension' | 'none';
-  weather?: 'rain' | 'clear' | 'monsoon';
+  weather?: WeatherType;
+  weatherEffect?: WeatherEffect;
   shakeScreen?: boolean;
   choices?: Choice[];
   phoneNotification?: {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { DialogueLine, PlayerStats, Choice } from '../types/game';
 import { CHARACTERS, STORY_IMAGES, ENDINGS } from '../data/storyData';
-import { RainCanvas } from './RainCanvas';
+import { WeatherOverlay } from './WeatherOverlay';
 import { sound } from '../services/soundEffects';
 import {
   Smartphone,
@@ -22,6 +22,10 @@ import {
   Sparkles,
   ArrowRight,
   RotateCcw,
+  CloudRain,
+  Flame,
+  Snowflake,
+  Sunset,
 } from 'lucide-react';
 
 interface NovelViewProps {
@@ -194,16 +198,16 @@ export const NovelView: React.FC<NovelViewProps> = ({
       />
       <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/30 to-slate-950/70 pointer-events-none" />
 
-      {/* Atmospheric Monsoon Rain Overlay */}
-      <RainCanvas
-        active={currentLine.weather === 'monsoon' || currentLine.weather === 'rain'}
-        intensity={currentLine.weather === 'monsoon' ? 'monsoon' : 'light'}
+      {/* Dynamic Bangkok Weather Overlay */}
+      <WeatherOverlay
+        weather={currentLine.weather}
+        effect={currentLine.weatherEffect}
       />
 
       {/* Top Bar HUD */}
       <header className="relative z-30 flex flex-wrap items-center justify-between gap-4 border-b border-slate-800/60 bg-slate-950/80 px-6 py-3 backdrop-blur-md">
-        {/* Zone 1: Location & Time Unboxed Metadata */}
-        <div className="flex items-center gap-3">
+        {/* Zone 1: Location & Time Unboxed Metadata + Weather Pill-Free Status */}
+        <div className="flex items-center gap-3 flex-wrap">
           <span className="text-xs font-bold tracking-wider text-amber-400 uppercase">
             {chapterTitle}
           </span>
@@ -211,6 +215,50 @@ export const NovelView: React.FC<NovelViewProps> = ({
           <span className="text-xs text-slate-300 font-medium">{currentLine.location}</span>
           <span className="text-slate-500" aria-hidden="true">·</span>
           <span className="text-xs text-slate-400">{currentLine.timeOfDay}</span>
+
+          {/* Dynamic Weather & Energy Condition Widget */}
+          {currentLine.weatherEffect && (
+            <>
+              <span className="text-slate-600 hidden md:inline" aria-hidden="true">|</span>
+              <div
+                className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-slate-900/90 border border-slate-700/60 text-xs shadow-inner"
+                title={`${currentLine.weatherEffect.label} (${currentLine.weatherEffect.tempCelsius}°C): ${currentLine.weatherEffect.impactReason}`}
+              >
+                {currentLine.weatherEffect.type === 'monsoon' && (
+                  <CloudRain className="h-3.5 w-3.5 text-sky-400 animate-pulse" />
+                )}
+                {currentLine.weatherEffect.type === 'heat_haze' && (
+                  <Flame className="h-3.5 w-3.5 text-amber-400 animate-pulse" />
+                )}
+                {currentLine.weatherEffect.type === 'ac_chill' && (
+                  <Snowflake className="h-3.5 w-3.5 text-blue-300" />
+                )}
+                {currentLine.weatherEffect.type === 'golden_dusk' && (
+                  <Sunset className="h-3.5 w-3.5 text-rose-300" />
+                )}
+
+                <span className="font-semibold text-slate-200 tabular-nums">
+                  {currentLine.weatherEffect.tempCelsius}°C
+                </span>
+                <span className="text-slate-400 hidden lg:inline">
+                  {currentLine.weatherEffect.label}
+                </span>
+
+                <span
+                  className={`text-[10px] font-bold tabular-nums ml-0.5 ${
+                    currentLine.weatherEffect.energyImpact > 0
+                      ? 'text-emerald-400'
+                      : 'text-rose-400'
+                  }`}
+                >
+                  {currentLine.weatherEffect.energyImpact > 0
+                    ? `+${currentLine.weatherEffect.energyImpact}`
+                    : currentLine.weatherEffect.energyImpact}{' '}
+                  ⚡
+                </span>
+              </div>
+            </>
+          )}
         </div>
 
         {/* Zone 2: Player Vitals Dashboard */}
@@ -365,6 +413,29 @@ export const NovelView: React.FC<NovelViewProps> = ({
               </div>
             </div>
             <span className="text-[11px] text-amber-400">Tap to open phone →</span>
+          </div>
+        )}
+
+        {/* Dynamic Atmospheric Energy Impact Banner */}
+        {currentLine.weatherEffect && currentLine.weatherEffect.energyImpact !== 0 && (
+          <div className="mb-2.5 flex items-center justify-between rounded-xl border border-slate-700/60 bg-slate-950/80 px-3.5 py-2 text-xs backdrop-blur-md">
+            <div className="flex items-center gap-2">
+              {currentLine.weatherEffect.type === 'monsoon' && <CloudRain className="h-4 w-4 text-sky-400" />}
+              {currentLine.weatherEffect.type === 'heat_haze' && <Flame className="h-4 w-4 text-amber-500" />}
+              {currentLine.weatherEffect.type === 'ac_chill' && <Snowflake className="h-4 w-4 text-cyan-300" />}
+              {currentLine.weatherEffect.type === 'golden_dusk' && <Sunset className="h-4 w-4 text-rose-300" />}
+              <span className="font-semibold text-slate-200">{currentLine.weatherEffect.label}</span>
+              <span className="text-slate-400 text-[11px] hidden sm:inline">— {currentLine.weatherEffect.impactReason}</span>
+            </div>
+            <span
+              className={`text-xs font-bold tabular-nums shrink-0 ${
+                currentLine.weatherEffect.energyImpact > 0 ? 'text-emerald-400' : 'text-rose-400'
+              }`}
+            >
+              {currentLine.weatherEffect.energyImpact > 0
+                ? `+${currentLine.weatherEffect.energyImpact} Sanity`
+                : `${currentLine.weatherEffect.energyImpact} Sanity`}
+            </span>
           </div>
         )}
 

@@ -29,6 +29,7 @@ export default function App() {
   const [dialogueHistory, setDialogueHistory] = useState<DialogueLine[]>([]);
   const [visitedNodes, setVisitedNodes] = useState<string[]>(['prologue_1']);
   const [unlockedEndings, setUnlockedEndings] = useState<string[]>([]);
+  const [appliedWeatherNodeId, setAppliedWeatherNodeId] = useState<string | null>(null);
 
   // Modals state
   const [isPhoneOpen, setIsPhoneOpen] = useState(false);
@@ -96,6 +97,20 @@ export default function App() {
     }
   }, [currentNode.endingId, unlockedEndings]);
 
+  // Apply dynamic location weather energy modifier
+  useEffect(() => {
+    if (gameState === 'PLAYING' && currentLine?.weatherEffect && appliedWeatherNodeId !== currentNodeId) {
+      setAppliedWeatherNodeId(currentNodeId);
+      const impact = currentLine.weatherEffect.energyImpact;
+      if (impact !== 0) {
+        setStats((prev) => ({
+          ...prev,
+          energy: Math.max(0, Math.min(100, prev.energy + impact)),
+        }));
+      }
+    }
+  }, [currentNodeId, currentLine, gameState, appliedWeatherNodeId]);
+
   // Audio adjustments
   const handleUpdateAudio = useCallback((bgm: number, sfx: number, muted: boolean) => {
     setBgmVolume(bgm);
@@ -110,6 +125,7 @@ export default function App() {
     setCurrentNodeId('prologue_1');
     setCurrentLineIndex(0);
     setDialogueHistory([]);
+    setAppliedWeatherNodeId(null);
     setGameState('PLAYING');
   };
 
