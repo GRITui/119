@@ -1,10 +1,8 @@
 /**
  * Automated script to push all planned issues to your GitHub repository via GitHub REST API.
- * Usage:
- *   GITHUB_TOKEN="ghp_your_token" GITHUB_REPO="username/repository-name" node scripts/sync-issues.js
  */
 
-const https = require('https');
+import https from 'node:https';
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const GITHUB_REPO = process.env.GITHUB_REPO; // format: "owner/repo"
@@ -12,7 +10,7 @@ const GITHUB_REPO = process.env.GITHUB_REPO; // format: "owner/repo"
 if (!GITHUB_TOKEN || !GITHUB_REPO) {
   console.error('\n❌ Missing required environment variables!');
   console.error('Please run with:');
-  console.error('  GITHUB_TOKEN="your_personal_access_token" GITHUB_REPO="owner/repo" node scripts/sync-issues.js\n');
+  console.error('  GITHUB_TOKEN="your_token" GITHUB_REPO="owner/repo" node scripts/sync-issues.js\n');
   process.exit(1);
 }
 
@@ -263,13 +261,13 @@ async function run() {
   for (const issue of ISSUES) {
     try {
       await createIssue(issue);
-      // Wait 800ms between requests to avoid secondary rate limits
-      await new Promise((r) => setTimeout(r, 800));
+      // Wait 600ms between requests to avoid rate limits
+      await new Promise((r) => setTimeout(r, 600));
     } catch (err) {
       console.error(`Error creating issue "${issue.title}":`, err.message);
     }
   }
-  console.log('\n🎉 Finished creating GitHub Issues!');
+  console.log('\n🎉 Finished creating all GitHub Issues!');
 }
 
 run();
