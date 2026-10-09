@@ -1,0 +1,6 @@
+{
+  "name": "Bangkok 9-to-Late: First Jobber Odyssey",
+  "description": "An interactive visual novel exploring the dilemmas, ambition, and survival of a first jobber in Bangkok.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
